@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FictionBook xmlns="http://www.gribuser.ru/xml/fictionbook/2.0" xmlns:l="http://www.w3.org/1999/xlink">
+<description>
+<title-info>
+<genre>sf</genre><genre>adventure</genre>
+<author><first-name>Анна</first-name><last-name>Пример</last-name></author>
+<book-title>Пример книги</book-title>
+<annotation><p>Небольшая книга для документации fb2kit.</p></annotation>
+<date value="2024-05-01">2024</date>
+<coverpage><image l:href="#cover.png"/></coverpage>
+<lang>ru</lang>
+<sequence name="Примеры" number="1"/>
+</title-info>
+<document-info>
+<author><nickname>docs</nickname></author>
+<program-used>hand</program-used>
+<id>fb2kit-sample</id>
+<version>1.0</version>
+</document-info>
+<publish-info><publisher>Издатель</publisher><city>Москва</city><year>2024</year><isbn>978-5-00000-000-0</isbn></publish-info>
+</description>
+<body>
+<title><p>Анна Пример</p><p>Пример книги</p></title>
+<section id="part1">
+<title><p>Часть первая</p></title>
+<epigraph><p>Всё начинается с первой строки.</p><text-author>Неизвестный</text-author></epigraph>
+<section id="ch1">
+<title><p>Глава 1</p></title>
+<p>Это <emphasis>первый</emphasis> абзац со <strong>сноской</strong><a l:href="#n1" type="note">[1]</a>.</p>
+<image l:href="#map.png"/>
+<p>Второй абзац ссылается на <a l:href="#ch2">вторую главу</a>.</p>
+</section>
+<section id="ch2">
+<title><p>Глава 2</p></title>
+<poem><title><p>Песня</p></title>
+<stanza><v>Первая строка,</v><v>вторая строка.</v></stanza>
+<stanza><v>Третья строка.</v></stanza>
+</poem>
+<table><tr><th>Город</th><th>Год</th></tr><tr><td>Москва</td><td>1147</td></tr></table>
+<cite><p>Цитата из другой книги.</p><text-author>Автор цитаты</text-author></cite>
+<p>Последний абзац<a l:href="#n2" type="note">[2]</a>.</p>
+</section>
+</section>
+</body>
+<body name="notes">
+<title><p>Примечания</p></title>
+<section id="n1"><title><p>1</p></title><p>Текст первой сноски.</p></section>
+<section id="n2"><title><p>2</p></title><p>Текст второй сноски.</p></section>
+</body>
+<binary id="cover.png" content-type="image/png">iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVR4nGP4z8AAAAMBAQDJ/pLvAAAAAElFTkSuQmCC</binary>
+<binary id="map.png" content-type="image/png">iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVR4nGP4z8AAAAMBAQDJ/pLvAAAAAElFTkSuQmCC</binary>
+</FictionBook>

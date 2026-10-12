@@ -1,0 +1,281 @@
+[
+  {
+    "id": "nested_sections",
+    "body": "<section id=\"s1\"><title><p>Часть 1</p></title><section id=\"s2\"><title><p>Глава</p><p>1</p></title><p id=\"p1\">Текст</p></section></section>",
+    "fields": [
+      "kind",
+      "text"
+    ],
+    "expected": [
+      [
+        "title",
+        "Часть 1"
+      ],
+      [
+        "title",
+        "Глава\n1"
+      ],
+      [
+        "paragraph",
+        "Текст"
+      ]
+    ],
+    "heading_path": [
+      "Часть 1",
+      "Глава 1"
+    ],
+    "first_heading_path": [
+      "Часть 1"
+    ]
+  },
+  {
+    "id": "inline_join_and_whitespace",
+    "body": "<section><p>  a<emphasis>b</emphasis> c\n\t d <strong>e<emphasis>f</emphasis></strong></p><subtitle>Под</subtitle><text-author>Автор</text-author></section>",
+    "fields": [
+      "kind",
+      "text"
+    ],
+    "expected": [
+      [
+        "paragraph",
+        "ab c d ef"
+      ],
+      [
+        "subtitle",
+        "Под"
+      ],
+      [
+        "text-author",
+        "Автор"
+      ]
+    ]
+  },
+  {
+    "id": "poem",
+    "body": "<section><poem id=\"po\"><title><p>Стих</p></title><epigraph><p>Эп</p></epigraph><stanza><v>Раз</v><v>два</v></stanza><stanza><title><p>II</p></title><v>три</v></stanza><text-author>Поэт</text-author><date>1900</date></poem></section>",
+    "fields": [
+      "kind",
+      "text"
+    ],
+    "expected": [
+      [
+        "poem-title",
+        "Стих"
+      ],
+      [
+        "epigraph",
+        "Эп"
+      ],
+      [
+        "stanza",
+        "Раз\nдва"
+      ],
+      [
+        "stanza",
+        "II\nтри"
+      ],
+      [
+        "text-author",
+        "Поэт"
+      ],
+      [
+        "date",
+        "1900"
+      ]
+    ]
+  },
+  {
+    "id": "epigraphs",
+    "body": "<title><p>Книга</p></title><epigraph><p>Е1</p><text-author>А1</text-author></epigraph><section><title><p>Г</p></title><epigraph><p>Е2</p><poem><stanza><v>в</v></stanza></poem></epigraph><p>x</p></section>",
+    "fields": [
+      "kind",
+      "text",
+      "heading_path"
+    ],
+    "expected": [
+      [
+        "title",
+        "Книга",
+        []
+      ],
+      [
+        "epigraph",
+        "Е1\nА1",
+        []
+      ],
+      [
+        "title",
+        "Г",
+        [
+          "Г"
+        ]
+      ],
+      [
+        "epigraph",
+        "Е2\nв",
+        [
+          "Г"
+        ]
+      ],
+      [
+        "paragraph",
+        "x",
+        [
+          "Г"
+        ]
+      ]
+    ]
+  },
+  {
+    "id": "cite_and_annotation",
+    "body": "<section><annotation><p>Ан</p></annotation><cite id=\"c\"><p>Ц1</p><table><tr><td>t</td></tr></table><text-author>Кто</text-author></cite></section>",
+    "fields": [
+      "kind",
+      "text",
+      "node_id"
+    ],
+    "expected": [
+      [
+        "annotation",
+        "Ан",
+        null
+      ],
+      [
+        "cite",
+        "Ц1\nt\nКто",
+        "c"
+      ]
+    ]
+  },
+  {
+    "id": "blocks_inside_raw_and_inline_keep_word_boundaries",
+    "body": "<section><strong><p>Конец</p><p>Начало</p></strong><epigraph><emphasis><p>a</p><p>b</p></emphasis></epigraph><p>Второе<foo><p>x</p><p>y</p></foo>Третье</p><p>c<p>d</p>e</p><p>f<empty-line/>g</p></section>",
+    "fields": [
+      "kind",
+      "text"
+    ],
+    "expected": [
+      [
+        "raw",
+        "Конец\nНачало"
+      ],
+      [
+        "epigraph",
+        "a\nb"
+      ],
+      [
+        "paragraph",
+        "Второе x y Третье"
+      ],
+      [
+        "paragraph",
+        "c d e"
+      ],
+      [
+        "paragraph",
+        "f g"
+      ]
+    ]
+  },
+  {
+    "id": "poem_title_has_own_kind_and_note_path",
+    "body": "<section><title><p>Г</p></title><poem><title><p>Стих</p></title><stanza><v>в</v></stanza></poem></section>",
+    "extra": "<body name=\"notes\"><section id=\"n1\"><title><p>1</p></title><p>t</p></section></body>",
+    "fields": [
+      "kind",
+      "heading_path"
+    ],
+    "expected": [
+      [
+        "title",
+        [
+          "Г"
+        ]
+      ],
+      [
+        "poem-title",
+        [
+          "Г"
+        ]
+      ],
+      [
+        "stanza",
+        [
+          "Г"
+        ]
+      ],
+      [
+        "note",
+        []
+      ]
+    ]
+  },
+  {
+    "id": "notes",
+    "body": "<section><p>Слово<a l:href=\"#n1\" type=\"note\">[1]</a> и <a l:href=\"#n2\">2</a> и <a l:href=\"#n1\">[1]</a> и <a l:href=\"#s\">x</a></p></section>",
+    "extra": "<body name=\"notes\"><title><p>Примечания</p></title><section id=\"n1\"><title><p>1</p></title><p>Пояснение</p><p>ещё</p></section><section id=\"g\"><title><p>Гл</p></title><section id=\"n2\"><p>Два</p></section></section></body>",
+    "text": "Слово[1] и 2 и [1] и x",
+    "notes": [
+      [
+        "n1",
+        "1\nПояснение\nещё",
+        []
+      ],
+      [
+        "n2",
+        "Два",
+        [
+          "Гл"
+        ]
+      ]
+    ],
+    "notes_title": "Примечания"
+  },
+  {
+    "id": "note_refs_resolve_to_note_blocks",
+    "body": "<section><p>a<a l:href=\"#g\" type=\"note\">1</a><a l:href=\"#p5\">2</a><a l:href=\"#zz\" type=\"note\">3</a><a l:href=\"#q\">4</a><a l:href=\"#n1\">5</a></p></section>",
+    "extra": "<body name=\"notes\"><section id=\"n1\"><p id=\"p5\">x</p></section><section id=\"g\"><title><p>Г</p></title><section id=\"n2\"><p>y</p></section></section><p id=\"q\">free</p></body>"
+  },
+  {
+    "id": "stray_text_in_containers_is_kept",
+    "body": "<title>Глава <emphasis>один</emphasis> X</title><section>Потерянный<p>x</p>хвост<epigraph>эп<p>e</p>хв</epigraph></section>",
+    "words": [
+      "Глава",
+      "один",
+      "X",
+      "Потерянный",
+      "x",
+      "хвост",
+      "эп",
+      "e",
+      "хв"
+    ]
+  },
+  {
+    "id": "book_meta",
+    "expected": {
+      "title": "Книга",
+      "authors": [
+        "Иван Петров"
+      ],
+      "genres": [
+        "sf",
+        "prose"
+      ],
+      "lang": "ru",
+      "sequence": [
+        "Цикл #2"
+      ],
+      "annotation": "Про всё."
+    }
+  },
+  {
+    "id": "book_meta_sparse",
+    "head": "<description><title-info><sequence name=\"С\"/></title-info></description>",
+    "expected": {
+      "sequence": [
+        "С"
+      ]
+    }
+  }
+]

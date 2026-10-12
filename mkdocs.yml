@@ -1,0 +1,50 @@
+site_name: fb2kit
+site_description: A typed, immutable FictionBook 2 parser with strict and tolerant modes
+docs_dir: docs
+strict: true
+theme:
+  name: material
+  language: en
+markdown_extensions:
+  - admonition
+  - attr_list
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.highlight
+  - pymdownx.superfences
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [src]
+          options:
+            docstring_style: google
+            show_source: false
+            show_root_heading: true
+            show_root_full_path: false
+            show_signature_annotations: true
+            separate_signature: true
+            members_order: source
+            merge_init_into_class: true
+            show_if_no_docstring: false
+nav:
+  - Overview: index.md
+  - Getting started:
+      - Installation and quickstart: tutorial/quickstart.md
+  - How-to guides:
+      - Book and metadata: how-to/metadata.md
+      - Walking the structure: how-to/structure.md
+      - Strict, tolerant and diagnostics: how-to/modes.md
+      - Encodings: how-to/encodings.md
+      - Sources and archives: how-to/sources.md
+      - RAG export: how-to/rag.md
+  - Reference:
+      - API: reference/api.md
+      - Model: reference/model.md
+  - Explanation:
+      - Parsing pipeline: explanation/architecture.md
+      - Security: explanation/security.md
+  - Limitations: limitations.md
+  - FAQ: faq.md

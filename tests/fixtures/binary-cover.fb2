@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FictionBook xmlns="http://www.gribuser.ru/xml/fictionbook/2.0" xmlns:l="http://www.w3.org/1999/xlink">
+<description><title-info><book-title>Binaries</book-title><coverpage><image l:href="#cover"/></coverpage></title-info></description>
+<body><section><p>Text</p><image l:href="#inline-img"/></section></body>
+<binary id="cover" content-type="image/png">iVBORw0KGgoAAAANSUhE
+UgAAAAEAAAABCAIAAACQ
+d1PeAAAADElEQVR4nGP4
+z8AAAAMBAQDJ/pLvAAAA
+AElFTkSuQmCC</binary>
+<binary id="inline-img" content-type="image/png">iVBORw0KGgoAAAANSUhE
+UgAAAAEAAAABCAIAAACQ
+d1PeAAAADElEQVR4nGP4
+z8AAAAMBAQDJ/pLvAAAA
+AElFTkSuQmCC</binary>
+<binary id="unused" content-type="image/png">iVBORw0KGgoAAAANSUhE
+UgAAAAEAAAABCAIAAACQ
+d1PeAAAADElEQVR4nGP4
+z8AAAAMBAQDJ/pLvAAAA
+AElFTkSuQmCC</binary>
+</FictionBook>

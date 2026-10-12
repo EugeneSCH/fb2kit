@@ -1,0 +1,29 @@
+# рабочие планы — не коммитятся
+plans/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+dist/
+build/
+*.egg-info/
+
+# инструменты
+.coverage
+.coverage.*
+htmlcov/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+site/
+benchmarks/.cache/
+
+# фикстуры-книги не коммитятся, кроме тестовых
+*.fb2
+!tests/fixtures/*.fb2
+*.fbz
+!tests/fixtures/*.fbz
+
+# local review artifacts
+review/

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FictionBook xmlns="http://www.gribuser.ru/xml/fictionbook/2.0" xmlns:l="http://www.w3.org/1999/xlink">
+<description>
+<title-info>
+<genre>sf</genre><genre>detective</genre><genre>prose_classic</genre>
+<author><first-name>Иван</first-name><middle-name>Петрович</middle-name><last-name>Сидоров</last-name><home-page>https://example.com</home-page><email>ivan@example.com</email></author>
+<author><nickname>nick</nickname></author>
+<book-title>Полное название</book-title>
+<annotation><p>Первый абзац</p><p>Второй абзац</p></annotation>
+<keywords>a, b</keywords>
+<date value="2020-01-01" xml:lang="ru">1 января 2020</date>
+<coverpage><image l:href="#cover"/></coverpage>
+<lang>ru</lang><src-lang>en</src-lang>
+<translator><first-name>Пётр</first-name><last-name>Кузнецов</last-name></translator>
+<sequence name="Хроники" number="3"/>
+</title-info>
+<document-info>
+<author><nickname>scanner</nickname></author>
+<program-used>vim</program-used>
+<date value="2021-02-03">3 Feb 2021</date>
+<id>fb2-test-id</id>
+<version>1.1</version>
+<history><p>v1.0</p><p>v1.1</p></history>
+</document-info>
+<publish-info><book-name>Печатное</book-name><publisher>Издатель</publisher><city>Москва</city><year>2021</year><isbn>978-5-00000-000-0</isbn></publish-info>
+<custom-info info-type="calibre">x</custom-info>
+<my-tag>y</my-tag>
+</description>
+<body><section><p>x</p></section></body>
+</FictionBook>

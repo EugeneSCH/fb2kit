@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FictionBook xmlns="http://www.gribuser.ru/xml/fictionbook/2.0" xmlns:l="http://www.w3.org/1999/xlink">
+<description><title-info><book-title>Structure</book-title></title-info></description>
+<body>
+<!-- Blocks mixed with a nested section violate the XSD choice but occur in real books. -->
+<section id="s1">
+<title><p>Chapter</p></title>
+<epigraph><p>Epigraph</p><text-author>Someone</text-author></epigraph>
+<image l:href="#pic"/>
+<annotation><p>Note</p></annotation>
+<p>Paragraph</p>
+<subtitle>Sub</subtitle>
+<empty-line/>
+<poem><title><p>Poem</p></title>
+<stanza><v>one</v><v>two</v></stanza>
+<stanza><v>three</v><v>four</v></stanza></poem>
+<cite><p>Quote</p><text-author>Author</text-author></cite>
+<table><tr><th>H</th><td colspan="2">C</td></tr></table>
+<section id="s2"><p>Inner</p></section>
+<p>Last</p>
+</section>
+</body>
+</FictionBook>

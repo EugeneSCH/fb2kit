@@ -1,0 +1,40 @@
+# fb2kit
+
+> Typed, immutable FictionBook 2 (FB2) parser for Python 3.11+. Strict mode by default, opt-in tolerant mode that repairs broken files and records every repair. No required dependencies; `fb2kit[fast]` adds lxml.
+
+## Entry points (import fb2kit)
+
+- `parse(source, *, encoding=None, mode=Mode.STRICT, backend=Backend.AUTO, max_size=256 MiB) -> FictionBook` (mode/backend also accept plain strings): source is a path (str is ALWAYS a path), bytes, or binary file object; .fbz/.fb2.zip detected by signature.
+- `parse_string(text, *, mode=Mode.STRICT, backend=Backend.AUTO, max_size=256 MiB) -> FictionBook`: already-decoded XML text.
+- `iter_blocks(book) -> Iterator[TextBlock]`: plain-text blocks in document order for RAG.
+- `book_meta(book) -> dict[str, str | list[str]]`: keys title, authors, genres, lang, sequence, annotation; empty ones omitted.
+- `Mode`: STRICT | TOLERANT (strings "strict"/"tolerant" accepted). `Backend`: AUTO | STDLIB | LXML.
+
+## FictionBook (frozen dataclass)
+
+- `description: Description` (`.title_info.title`, `.authors[i].full_name`, `.genres`, `.lang`, `.sequences`, `.annotation`; `.document_info`, `.publish_info` may be None)
+- `bodies: tuple[Body, ...]` (body with name, e.g. "notes", is a notes body: `book.notes_body`)
+- `binaries: tuple[Binary, ...]` (`.id`, `.content_type`, `.data` bytes decoded lazily)
+- `cover: Binary | None`, `report: ParseReport`, `extra: tuple[Raw, ...]`, `element` (raw ElementTree root)
+- `by_id(id) -> Node | Binary | None` (alias `Indexed`), `resolve(link) -> Node | Binary | None`, `index: Mapping[str, Node | Binary]`, `iter_sections() -> Iterator[Section]`
+
+## Model (from fb2kit import ...; same names in fb2kit.model)
+
+Body/Section: `.children` in document order; `.title`, `.sections`, `.blocks`. Blocks: Paragraph, Subtitle, EmptyLine, Title, Epigraph, Annotation, Poem (stanzas -> verses), Cite, TextAuthor, Table (rows -> cells), Image, Raw. Inline: Text(value), Style(kind, children), Link(href, link_type, children; is_note), Image(href), Raw(tag, text, element). `iter_nodes(node)` walks depth-first.
+
+## TextBlock fields
+
+text, kind (paragraph|subtitle|title|poem-title|epigraph|annotation|cite|stanza|text-author|date|table|note|raw), heading_path, section_idx, depth, section_id, node_id (note section without id: synthetic `notes{body_idx}-{section_idx joined by dots}`), ordinal, note_refs (node_id of note blocks), body (None = main text), body_idx. Chapter key: consecutive blocks with equal (body_idx, section_idx).
+
+## Report and errors
+
+`ParseReport(diagnostics, source_encoding, declared_encoding, container, backend)`; `Diagnostic(code, message, severity, path)`. Codes: encoding.guessed (confident guess), encoding.fallback (weak signal, cp1251), encoding.declared-mismatch, container.fbz, container.entry-sniffed, namespace.missing, namespace.foreign, namespace.prefix-injected, xml.bare-amp, xml.control-chars, xml.auto-closed, xml.lxml-recover, element.unknown, element.missing, id.duplicate, link.unresolved, cover.missing, notes.body-name.
+
+Exceptions: Fb2Error > Fb2SourceError > Fb2UnsafeInputError (any DOCTYPE/ENTITY, both modes); Fb2Error > Fb2EncodingError; Fb2Error > Fb2ParseError(path, line).
+
+## Docs
+
+- [Quickstart](tutorial/quickstart.md)
+- [Strict vs tolerant, diagnostic codes](how-to/modes.md)
+- [RAG export](how-to/rag.md)
+- [API reference](reference/api.md)

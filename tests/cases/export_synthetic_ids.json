@@ -1,0 +1,24 @@
+[
+  {
+    "id": "synthetic_ids",
+    "notes": "<body name=\"notes\"><title><p>N</p></title><section><p>один</p></section><section id=\"g\"><section><p>вложенная</p></section></section></body><body name=\"comments\"><section><p>третий</p></section></body>",
+    "expected": [
+      [
+        "notes1-1",
+        "один"
+      ],
+      [
+        "notes1-2.1",
+        "вложенная"
+      ],
+      [
+        "notes2-1",
+        "третий"
+      ]
+    ]
+  },
+  {
+    "id": "inner_id",
+    "notes": "<body name=\"notes\"><section><p id=\"x\">один</p></section></body>"
+  }
+]

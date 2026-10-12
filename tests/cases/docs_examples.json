@@ -1,0 +1,69 @@
+{
+  "expected": {
+    "README.md": [
+      "Пример книги"
+    ],
+    "index.md": [
+      "Пример книги"
+    ],
+    "tutorial/quickstart.md": [
+      "['Анна Пример']",
+      "xml.bare-amp",
+      "ch1 2"
+    ],
+    "how-to/metadata.md": [
+      "Примеры 1",
+      "2024 2024-05-01",
+      "cover.png image/png 69"
+    ],
+    "how-to/structure.md": [
+      "§ Глава 1",
+      "Город | Год",
+      "[1] → n1",
+      "#map.png image/png"
+    ],
+    "how-to/modes.md": [
+      "strict:",
+      "warning xml.bare-amp",
+      "stdlib"
+    ],
+    "how-to/encodings.md": [
+      "cp1251",
+      "['encoding.guessed']",
+      "Тест"
+    ],
+    "how-to/sources.md": [
+      "fbz",
+      "['unpacked book.fb2']",
+      "input exceeds max_size=1024"
+    ],
+    "how-to/rag.md": [
+      "4 Часть первая › Глава 1 ['1\\nТекст первой сноски.']"
+    ],
+    "explanation/security.md": [
+      "refusing to parse"
+    ]
+  },
+  "book_title": "Пример книги",
+  "author": "Анна Пример",
+  "container_title": "Тест",
+  "text_fragments": [
+    "Это первый абзац со сноской[1]."
+  ],
+  "note": "Текст первой сноски.",
+  "markdown": [
+    "## Часть первая",
+    "### Глава 1",
+    "Это *первый* абзац со **сноской**[^n1].",
+    "![](images/map.png)",
+    "Первая строка,  \nвторая строка.",
+    "| Москва | 1147 |",
+    "> Цитата из другой книги.",
+    "[^n1]: Текст первой сноски."
+  ],
+  "heading": [
+    "Часть первая",
+    "Глава 1"
+  ],
+  "second_note": "Текст второй сноски."
+}

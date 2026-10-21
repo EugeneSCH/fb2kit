@@ -25,6 +25,40 @@ available from there (`from fb2kit import Section`); they are described in the [
 
 ::: fb2kit.Severity
 
+## Writing
+
+::: fb2kit.validate
+
+::: fb2kit.WriteReport
+
+::: fb2kit.Problem
+
+::: fb2kit.WriteSeverity
+
+## Building a book
+
+::: fb2kit.new_book
+
+::: fb2kit.BookBuilder
+
+::: fb2kit.SectionBuilder
+
+::: fb2kit.IdGenerator
+
+## Editing a book
+
+::: fb2kit.edit_metadata
+
+::: fb2kit.replace_node
+
+::: fb2kit.with_description
+
+::: fb2kit.with_binaries
+
+::: fb2kit.with_cover
+
+::: fb2kit.reindex
+
 ## RAG export
 
 ::: fb2kit.iter_blocks
@@ -44,3 +78,5 @@ available from there (`from fb2kit import Section`); they are described in the [
 ::: fb2kit.Fb2EncodingError
 
 ::: fb2kit.Fb2ParseError
+
+::: fb2kit.Fb2WriteError

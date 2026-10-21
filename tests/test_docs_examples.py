@@ -14,6 +14,8 @@ from pathlib import Path
 import pytest
 from conftest import TITLE, cases
 
+import fb2kit
+
 ROOT = Path(__file__).resolve().parent.parent
 FIXTURES = ROOT / "tests" / "fixtures"
 EXAMPLES = ROOT / "examples"
@@ -138,3 +140,43 @@ def test_check_folder(tmp_path: Path) -> None:
     assert re.search(r"^failed +xxe-doctype\.fb2 +Fb2UnsafeInputError", out, re.M)
     shutil.copy(FIXTURES / "sample.fb2", tmp_path)
     assert "strict=1" in _run("check_folder.py", tmp_path).stdout
+
+
+def test_make_book(tmp_path: Path) -> None:
+    """С40: the make_book example creates a book with a cover and notes."""
+    out = tmp_path / "made.fb2"
+    stdout = _run("make_book.py", "-o", out).stdout
+    assert "Новая книга" in stdout
+    book = fb2kit.parse(out)
+    assert book.description.title_info.title == "Новая книга"
+    assert book.description.title_info.authors[0].full_name == "Анна Пример"
+    assert book.cover is not None
+    assert book.notes_body is not None
+
+
+def test_make_book_fbz(tmp_path: Path) -> None:
+    """С40: the make_book example writes an archive."""
+    out = tmp_path / "made.fbz"
+    _run("make_book.py", "-o", out, "--fbz")
+    with zipfile.ZipFile(out) as zf:
+        assert zf.namelist() == ["made.fb2"]
+
+
+def test_edit_metadata(tmp_path: Path) -> None:
+    """С40: the edit_metadata example changes the title and keeps the source."""
+    source = tmp_path / "book.fb2"
+    shutil.copy(FIXTURES / "sample.fb2", source)
+    stdout = _run("edit_metadata.py", source, "--title", "Новое название").stdout
+    assert "Новое название" in stdout
+    edited = tmp_path / "book.edited.fb2"
+    assert edited.exists()
+    assert fb2kit.parse(edited).description.title_info.title == "Новое название"
+    # The original is untouched.
+    assert fb2kit.parse(source).description.title_info.title == _DATA["book_title"]
+
+
+def test_edit_metadata_needs_a_change(tmp_path: Path) -> None:
+    """С40: the edit_metadata example fails without a change."""
+    source = tmp_path / "book.fb2"
+    shutil.copy(FIXTURES / "sample.fb2", source)
+    _run("edit_metadata.py", source, ok=False)

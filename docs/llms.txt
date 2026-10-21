@@ -1,6 +1,6 @@
 # fb2kit
 
-> Typed, immutable FictionBook 2 (FB2) parser for Python 3.11+. Strict mode by default, opt-in tolerant mode that repairs broken files and records every repair. No required dependencies; `fb2kit[fast]` adds lxml.
+> Typed, immutable FictionBook 2 (FB2) parser and writer for Python 3.11+. Strict mode by default, opt-in tolerant mode that repairs broken files and records every repair. No required dependencies; `fb2kit[fast]` adds lxml.
 
 ## Entry points (import fb2kit)
 
@@ -17,6 +17,15 @@
 - `binaries: tuple[Binary, ...]` (`.id`, `.content_type`, `.data` bytes decoded lazily)
 - `cover: Binary | None`, `report: ParseReport`, `extra: tuple[Raw, ...]`, `element` (raw ElementTree root)
 - `by_id(id) -> Node | Binary | None` (alias `Indexed`), `resolve(link) -> Node | Binary | None`, `index: Mapping[str, Node | Binary]`, `iter_sections() -> Iterator[Section]`
+- `to_xml(*, pretty=False, declaration=False) -> str`, `to_bytes(*, pretty=False, strict=True) -> bytes`, `write(path, *, pretty=False, strict=True, compress=None) -> None`, `replace(**changes) -> FictionBook` (rebuilds `element` and `index`)
+
+## Writing
+
+- `validate(book) -> WriteReport` (`.problems`, `.errors`, `.warnings`, `.ok`); `Problem(code, message, severity, path)`, `WriteSeverity.ERROR | WARNING`. Codes: write.no-title, write.no-body, write.duplicate-id, write.invalid-id, write.invalid-char, write.missing-binary, write.dangling-link, write.empty-body, write.lost-id. Errors block `write()`/`to_bytes()`; `strict=False` skips the check.
+- `new_book(*, title, lang="ru", authors=()) -> BookBuilder`: `add_author`, `add_genre`, `set_keywords`, `set_sequence`, `set_annotation`, `add_section(title=None, *, id=None) -> SectionBuilder`, `add_binary(data, content_type="image/png", *, id=None) -> Binary`, `set_cover(binary)`, `add_note(text, *, title=None) -> str`, `build() -> FictionBook`.
+- `SectionBuilder`: `add_paragraph(*parts, style=None)`, `add_subtitle(text)`, `add_empty_line()`, `add_poem(title, stanzas, *, author=None)`, `add_image(binary, *, alt=None)`, `add_section(title=None, *, id=None) -> SectionBuilder`.
+- `edit_metadata(book, **changes) -> FictionBook` (fields of `TitleInfo`), `replace_node(book, target, replacement) -> FictionBook` (target found by identity), `with_description(book, description)`, `with_binaries(book, binaries)`, `with_cover(book, binary | None)`, `reindex(book) -> FictionBook`.
+- The output is UTF-8, compact and deterministic; a `.fbz`/`.fb2.zip`/`.zip` suffix gives a zip archive. Pretty output does not preserve the model on re-read (indentation is text).
 
 ## Model (from fb2kit import ...; same names in fb2kit.model)
 
@@ -30,11 +39,12 @@ text, kind (paragraph|subtitle|title|poem-title|epigraph|annotation|cite|stanza|
 
 `ParseReport(diagnostics, source_encoding, declared_encoding, container, backend)`; `Diagnostic(code, message, severity, path)`. Codes: encoding.guessed (confident guess), encoding.fallback (weak signal, cp1251), encoding.declared-mismatch, container.fbz, container.entry-sniffed, namespace.missing, namespace.foreign, namespace.prefix-injected, xml.bare-amp, xml.control-chars, xml.auto-closed, xml.lxml-recover, element.unknown, element.missing, id.duplicate, link.unresolved, cover.missing, notes.body-name.
 
-Exceptions: Fb2Error > Fb2SourceError > Fb2UnsafeInputError (any DOCTYPE/ENTITY, both modes); Fb2Error > Fb2EncodingError; Fb2Error > Fb2ParseError(path, line).
+Exceptions: Fb2Error > Fb2SourceError > Fb2UnsafeInputError (any DOCTYPE/ENTITY, both modes); Fb2Error > Fb2EncodingError; Fb2Error > Fb2ParseError(path, line); Fb2Error > Fb2WriteError(problems).
 
 ## Docs
 
 - [Quickstart](tutorial/quickstart.md)
+- [Writing a book](how-to/write.md)
 - [Strict vs tolerant, diagnostic codes](how-to/modes.md)
 - [RAG export](how-to/rag.md)
 - [API reference](reference/api.md)

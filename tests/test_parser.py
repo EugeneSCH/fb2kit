@@ -151,3 +151,36 @@ def test_parse_error_reports_the_line() -> None:
     with pytest.raises(Fb2ParseError) as exc:
         parse_tree(f'<FictionBook xmlns="{FB2_NS}">\n<body>\n<p>x</body>\n</FictionBook>')
     assert exc.value.line == 3
+
+
+# Element names that no XML parser accepts, but that the lxml recover mode lets through.
+_INVALID_NAMES = [":body", "a:b", "a:b:c", ":"]
+# In a foreign namespace lxml keeps an undeclared prefix verbatim (`a:b` stays `a:b`),
+# so only the names with a broken QName are mangled there.
+_MANGLED_NAMES = [":body", "a:b:c", ":"]
+
+
+@pytest.mark.parametrize("backend", _backends())
+@pytest.mark.parametrize("name", _INVALID_NAMES)
+@pytest.mark.parametrize("mode", [Mode.STRICT, Mode.TOLERANT])
+def test_invalid_element_name_is_a_parse_error_not_a_value_error(
+    backend: Backend,
+    name: str,
+    mode: Mode,
+) -> None:
+    """С38: an invalid element name is a parse error, not a ValueError."""
+    text = f"<FictionBook><description><book-title>T</book-title></description><{name} /></FictionBook>"
+    with pytest.raises(Fb2ParseError):
+        parse_tree(text, backend=backend, mode=mode)
+
+
+@pytest.mark.parametrize("backend", _backends())
+@pytest.mark.parametrize("name", _MANGLED_NAMES)
+def test_invalid_element_name_in_a_foreign_namespace_is_a_parse_error(
+    backend: Backend,
+    name: str,
+) -> None:
+    """С38: a broken qualified name in a foreign namespace is a parse error."""
+    text = f'<FictionBook xmlns="http://example.org/other"><{name} /></FictionBook>'
+    with pytest.raises(Fb2ParseError):
+        parse_tree(text, backend=backend, mode=Mode.TOLERANT)

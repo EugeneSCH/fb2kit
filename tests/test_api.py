@@ -223,3 +223,49 @@ def test_book_without_body_is_a_warning(mode: Mode) -> None:
     )
     assert book.bodies == ()
     assert "element.missing" in [d.code for d in book.report.warnings]
+
+
+_BROKEN_INPUTS = [
+    "<FictionBook><:body><section/></:body></FictionBook>",
+    "<FictionBook><a:b><section/></a:b></FictionBook>",
+    "<FictionBook><1bad><section/></1bad></FictionBook>",
+    "<FictionBook><body>&badentity;</body></FictionBook>",
+    "<FictionBook><body a b=></body></FictionBook>",
+    "<FictionBook><body><section></body></FictionBook>",
+    "<FictionBook><body><section></FictionBook>",
+    "<html><body/></html>",
+    "",
+    "   ",
+    "not xml at all",
+    "<?xml version='1.0' encoding='utf-8'?><FictionBook/>",
+]
+
+
+@pytest.mark.parametrize("backend", _backends())
+@pytest.mark.parametrize("text", _BROKEN_INPUTS)
+@pytest.mark.parametrize("mode", [Mode.STRICT, Mode.TOLERANT])
+def test_broken_input_only_raises_fb2_error(
+    backend: fb2kit.Backend,
+    text: str,
+    mode: Mode,
+) -> None:
+    """С37: a broken document raises only Fb2Error."""
+    try:
+        fb2kit.parse_string(text, mode=mode, backend=backend)
+    except fb2kit.Fb2Error:
+        return
+    except Exception as exc:  # the contract is that nothing but Fb2Error escapes
+        raise AssertionError(f"{type(exc).__name__} escaped: {exc}") from exc
+
+
+@pytest.mark.parametrize("backend", _backends())
+@pytest.mark.parametrize("mode", [Mode.STRICT, Mode.TOLERANT])
+def test_broken_bytes_only_raise_fb2_error(backend: fb2kit.Backend, mode: Mode) -> None:
+    """С37: broken bytes raise only Fb2Error."""
+    for raw in (b"", b"\xff\xfe\x00\x00broken", b"\x00\x01\x02", b"PK\x03\x04not-a-zip"):
+        try:
+            fb2kit.parse(raw, mode=mode, backend=backend)
+        except fb2kit.Fb2Error:
+            continue
+        except Exception as exc:  # the contract is that nothing but Fb2Error escapes
+            raise AssertionError(f"{type(exc).__name__} escaped: {exc}") from exc

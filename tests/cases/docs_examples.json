@@ -40,6 +40,16 @@
     "how-to/rag.md": [
       "4 Часть первая › Глава 1 ['1\\nТекст первой сноски.']"
     ],
+    "how-to/write.md": [
+      "bin-1 image/png",
+      "Новое название",
+      "Пример книги",
+      "NEW",
+      "['book.fb2']",
+      "the book has no <body> (1 problems)",
+      "write.no-body",
+      "False"
+    ],
     "explanation/security.md": [
       "refusing to parse"
     ]

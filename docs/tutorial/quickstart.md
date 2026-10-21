@@ -46,6 +46,37 @@ for block in fb2kit.iter_blocks(book):
     print(f"[{block.kind}] {block.text}")
 ```
 
+## Write the book back
+
+`write()` saves the book as an FB2 file; the output is UTF-8, compact and deterministic.
+
+```python
+book.write("out.fb2")
+```
+
+A `.fbz` suffix gives a zip archive with the book inside. Before writing, the book is validated:
+`validate()` returns the problems it found.
+
+```python
+report = fb2kit.validate(book)
+print(report.ok)  # True
+```
+
+## Create a book from scratch
+
+`new_book()` builds a book with a builder; `build()` gives a frozen book you can write.
+
+```python
+import fb2kit
+from fb2kit import Author
+
+builder = fb2kit.new_book(title="Новая книга", authors=(Author(last_name="Иванов"),))
+chapter = builder.add_section("Глава 1")
+chapter.add_paragraph("Текст главы")
+created = builder.build()
+created.write("new.fb2")
+```
+
 ## Open a broken book
 
 Tolerant mode repairs what it can and records what it did:
@@ -66,4 +97,4 @@ if book.cover is not None:
 ```
 
 Next: [metadata](../how-to/metadata.md), [structure](../how-to/structure.md),
-[modes and diagnostics](../how-to/modes.md).
+[writing](../how-to/write.md), [modes and diagnostics](../how-to/modes.md).

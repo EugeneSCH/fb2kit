@@ -2,7 +2,10 @@
 
 from __future__ import annotations
 
-from typing import Any
+from typing import TYPE_CHECKING, Any
+
+if TYPE_CHECKING:
+    from fb2kit.write.validate import Problem
 
 
 class Fb2Error(Exception):
@@ -43,3 +46,26 @@ class Fb2ParseError(Fb2Error):
 
 def _rebuild_parse_error(message: str, path: str | None, line: int | None) -> Fb2ParseError:
     return Fb2ParseError(message, path=path, line=line)
+
+
+class Fb2WriteError(Fb2Error):
+    """The book cannot be written as it is.
+
+    Attributes:
+        problems: The problems that blocked the write; the first one is the reason.
+    """
+
+    def __init__(self, problems: tuple[Problem, ...]) -> None:
+        self.problems = problems
+        if problems:
+            message = f"{problems[0].message} ({len(problems)} problems)"
+        else:
+            message = "fb2kit cannot write this book"
+        super().__init__(message)
+
+    def __reduce__(self) -> tuple[Any, ...]:
+        return (_rebuild_write_error, (self.problems,))
+
+
+def _rebuild_write_error(problems: tuple[Problem, ...]) -> Fb2WriteError:
+    return Fb2WriteError(problems)

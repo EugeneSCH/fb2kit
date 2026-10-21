@@ -1,10 +1,10 @@
 [project]
 name = "fb2kit"
-version = "0.1.0"
-description = "Typed, immutable FictionBook (FB2) parser with strict and tolerant modes"
+version = "0.2.0"
+description = "Typed, immutable FictionBook (FB2) parser and writer with strict and tolerant modes"
 readme = "README.md"
 license = "MIT"
-license-files = ["LICENSE"]
+license-files = ["LICENSE", "src/fb2kit/write/_schema/LICENSE.md"]
 authors = [
     { name = "Евгений Щербинин", email = "e.shherbinin@ideco.ru" }
 ]
@@ -48,6 +48,9 @@ target-version = "py311"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "N", "W", "UP", "B", "C4", "SIM", "RUF"]
+# The labels of the scenarios of the spec are written in the Cyrillic "С": the rule of
+# the confusables would cry over the docstring of every test of the writer.
+allowed-confusables = ["С"]
 
 [tool.ruff.lint.per-file-ignores]
 # Long inline XML in tests.

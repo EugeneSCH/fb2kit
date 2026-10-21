@@ -33,5 +33,14 @@ tags. The model is the same on both backends.
 
 ## Can I modify a book and save it?
 
-The model is immutable and there is no FB2 writer yet. `dataclasses.replace` gives you a modified
-copy, but you have to write the serialization yourself.
+Yes. The model is immutable, so a change gives a new book: `edit_metadata(book, title=...)` for the
+metadata, `replace_node(book, target, replacement)` for a node, `book.replace(**changes)` for the
+fields of the book. `book.write(path)` saves it, `book.to_bytes()` gives the bytes. See
+[Writing a book](how-to/write.md).
+
+## Is the file I write the same as the file I read?
+
+Not byte for byte: the writer canonicalizes the output. The elements, their order, the attributes,
+the text, the unknown elements and the attachments are the same; the indentation, the order of the
+attributes, the original encoding and the comments are not. The list is in
+[Limitations](limitations.md), the reasons are in [Writing](explanation/writing.md).

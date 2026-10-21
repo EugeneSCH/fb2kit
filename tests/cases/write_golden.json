@@ -1,0 +1,41 @@
+{
+  "fixtures": {
+    "minimal.fb2": {
+      "compact": "a188843134baec92e4bcf23494d436d9d427b6f6038365f7506c6983dd540a19",
+      "pretty": "8756355639916e2eae8e5fea32e066f4e18070c47d1d31282936fc4475eea121"
+    },
+    "metadata-full.fb2": {
+      "compact": "80e8d905667efd064a56fee3b202cd7a567e2b0e19d6ffb81ecb0da6e07e8a75",
+      "pretty": "89b60af1dc23ff3ae512d87e459c6b2aee8ebaca9c7597c279c49e19c81dcb05"
+    },
+    "notes-and-links.fb2": {
+      "compact": "4811fbb1668a8f916f4e08b9b3b925721f16f71993306b38d81d70c5f4e195ff",
+      "pretty": "8556f4ac4e554338dcc1886a725fdcd1b4593b7b6a0ed273d790fcdfa3cf02ba"
+    },
+    "structure-rich.fb2": {
+      "compact": "73430bb5476b66d03bf7aebf34f3b37f283f04512c291d80db0401140f9a7fe4",
+      "pretty": "db6ff54db761967ca434275a4ab7e73f7f4ba0b5e88730313bd37402fd2e8479"
+    },
+    "binary-cover.fb2": {
+      "compact": "b2dc8f06f9fc28be102354047638ca58ede6a4bf60ffe065ba40bb712b477a0a",
+      "pretty": "f60bda84c347affb0ce223f4c73c3fa94faa428a72a34881f36f0224e7bf80c9"
+    },
+    "sample.fb2": {
+      "compact": "8e3666ab268b8d349eec08173a04c7544210657db74595b2e021e63a36cb53f9",
+      "pretty": "6363944264eee513335e7c8c91d5064a4a6d0464dfe629e1a4aa981f4da8dc01"
+    },
+    "utf8-bom.fb2": {
+      "compact": "33b487a15d31c5dae437f365faf6a3d738c661c4ce0165cec35cee8d93d90bde",
+      "pretty": "f03d8ef084dc6ba3716f7d383b51c263166b7bae2ef1e7827539e04dddc0c23f"
+    },
+    "koi8r-prolog.fb2": {
+      "compact": "33b487a15d31c5dae437f365faf6a3d738c661c4ce0165cec35cee8d93d90bde",
+      "pretty": "f03d8ef084dc6ba3716f7d383b51c263166b7bae2ef1e7827539e04dddc0c23f"
+    }
+  },
+  "synthetic": {
+    "compact": "<?xml version='1.0' encoding='utf-8'?>\n<FictionBook xmlns=\"http://www.gribuser.ru/xml/fictionbook/2.0\" xmlns:l=\"http://www.w3.org/1999/xlink\"><description><title-info><genre>sf</genre><author><first-name>Ann</first-name><last-name>Example</last-name></author><book-title>Golden</book-title><annotation><p>Note</p></annotation><keywords>a, b</keywords><date value=\"2024-05-01\">2024</date><coverpage><image l:href=\"#cover.png\"/></coverpage><lang>en</lang><src-lang>fr</src-lang><translator><nickname>tr</nickname></translator><sequence name=\"Series\" number=\"1\"/></title-info><document-info><author><nickname>docs</nickname></author><program-used>hand</program-used><id>gid</id><version>1.0</version><history><p>v1</p></history><publisher>Pub</publisher></document-info><publish-info><book-name>Print</book-name><publisher>Pub</publisher><city>Town</city><year>2024</year><isbn>0</isbn></publish-info></description><body><section id=\"s1\"><title><p>Chapter</p></title><p>Text <emphasis>emph</emphasis> and <a l:href=\"#n1\" type=\"note\">[1]</a>.</p><empty-line/><subtitle>Sub</subtitle><poem><title><p>Poem</p></title><stanza><v>one</v><v>two</v></stanza></poem><cite><p>Quote</p><text-author>Author</text-author></cite><table><tr><th>H</th><td colspan=\"2\" rowspan=\"3\" align=\"left\">C</td></tr></table><image l:href=\"#map.png\" alt=\"alt\" title=\"title\"/></section></body></FictionBook>\n",
+    "pretty": "<?xml version='1.0' encoding='utf-8'?>\n<FictionBook xmlns=\"http://www.gribuser.ru/xml/fictionbook/2.0\" xmlns:l=\"http://www.w3.org/1999/xlink\">\n  <description>\n    <title-info>\n      <genre>sf</genre>\n      <author>\n        <first-name>Ann</first-name>\n        <last-name>Example</last-name>\n      </author>\n      <book-title>Golden</book-title>\n      <annotation>\n        <p>Note</p>\n      </annotation>\n      <keywords>a, b</keywords>\n      <date value=\"2024-05-01\">2024</date>\n      <coverpage>\n        <image l:href=\"#cover.png\"/>\n      </coverpage>\n      <lang>en</lang>\n      <src-lang>fr</src-lang>\n      <translator>\n        <nickname>tr</nickname>\n      </translator>\n      <sequence name=\"Series\" number=\"1\"/>\n    </title-info>\n    <document-info>\n      <author>\n        <nickname>docs</nickname>\n      </author>\n      <program-used>hand</program-used>\n      <id>gid</id>\n      <version>1.0</version>\n      <history>\n        <p>v1</p>\n      </history>\n      <publisher>Pub</publisher>\n    </document-info>\n    <publish-info>\n      <book-name>Print</book-name>\n      <publisher>Pub</publisher>\n      <city>Town</city>\n      <year>2024</year>\n      <isbn>0</isbn>\n    </publish-info>\n  </description>\n  <body>\n    <section id=\"s1\">\n      <title>\n        <p>Chapter</p>\n      </title>\n      <p>Text <emphasis>emph</emphasis> and <a l:href=\"#n1\" type=\"note\">[1]</a>.</p>\n      <empty-line/>\n      <subtitle>Sub</subtitle>\n      <poem>\n        <title>\n          <p>Poem</p>\n        </title>\n        <stanza>\n          <v>one</v>\n          <v>two</v>\n        </stanza>\n      </poem>\n      <cite>\n        <p>Quote</p>\n        <text-author>Author</text-author>\n      </cite>\n      <table>\n        <tr>\n          <th>H</th>\n          <td colspan=\"2\" rowspan=\"3\" align=\"left\">C</td>\n        </tr>\n      </table>\n      <image l:href=\"#map.png\" alt=\"alt\" title=\"title\"/>\n    </section>\n  </body>\n</FictionBook>\n"
+  },
+  "edited": "<?xml version='1.0' encoding='utf-8'?>\n<FictionBook xmlns=\"http://www.gribuser.ru/xml/fictionbook/2.0\" xmlns:l=\"http://www.w3.org/1999/xlink\"><description><title-info><genre>sf</genre><author><first-name>Ann</first-name><last-name>Example</last-name></author><book-title>Golden</book-title><annotation><p>Note</p></annotation><keywords>a, b</keywords><date value=\"2024-05-01\">2024</date><coverpage><image l:href=\"#cover.png\"/></coverpage><lang>en</lang><src-lang>fr</src-lang><translator><nickname>tr</nickname></translator><sequence name=\"Series\" number=\"1\"/></title-info><document-info><author><nickname>docs</nickname></author><program-used>hand</program-used><id>gid</id><version>1.0</version><history><p>v1</p></history><publisher>Pub</publisher></document-info><publish-info><book-name>Print</book-name><publisher>Pub</publisher><city>Town</city><year>2024</year><isbn>0</isbn></publish-info></description><body><section id=\"s1\"><p>NEW</p></section></body></FictionBook>\n"
+}

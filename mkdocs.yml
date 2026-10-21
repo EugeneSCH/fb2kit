@@ -1,5 +1,5 @@
 site_name: fb2kit
-site_description: A typed, immutable FictionBook 2 parser with strict and tolerant modes
+site_description: A typed, immutable FictionBook 2 parser and writer with strict and tolerant modes
 docs_dir: docs
 strict: true
 theme:
@@ -40,11 +40,13 @@ nav:
       - Encodings: how-to/encodings.md
       - Sources and archives: how-to/sources.md
       - RAG export: how-to/rag.md
+      - Writing a book: how-to/write.md
   - Reference:
       - API: reference/api.md
       - Model: reference/model.md
   - Explanation:
       - Parsing pipeline: explanation/architecture.md
+      - Writing: explanation/writing.md
       - Security: explanation/security.md
   - Limitations: limitations.md
   - FAQ: faq.md

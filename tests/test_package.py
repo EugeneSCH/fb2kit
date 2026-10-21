@@ -2,8 +2,9 @@ import fb2kit
 
 
 def test_version_is_exposed() -> None:
+    """С39: the package exposes the version of the release."""
     assert isinstance(fb2kit.__version__, str)
-    assert fb2kit.__version__ == "0.1.0"
+    assert fb2kit.__version__ == "0.2.0"
 
 
 def test_py_typed_marker_is_shipped() -> None:

@@ -8,7 +8,9 @@ from fb2kit.errors import (
     Fb2ParseError,
     Fb2SourceError,
     Fb2UnsafeInputError,
+    Fb2WriteError,
 )
+from fb2kit.write.validate import Problem, WriteSeverity
 
 
 def test_hierarchy_is_flat_under_fb2_error() -> None:
@@ -52,3 +54,11 @@ def test_exceptions_survive_pickle(exc: Fb2Error) -> None:
 def test_parse_error_repr_shows_location() -> None:
     text = repr(Fb2ParseError("x", path="body[0]", line=41))
     assert "body[0]" in text and "41" in text
+
+
+def test_write_error_survives_pickling() -> None:
+    """С100: the error crosses a process boundary with its problems."""
+
+    err = Fb2WriteError((Problem("x", "boom", WriteSeverity.ERROR),))
+    restored = pickle.loads(pickle.dumps(err))
+    assert restored.problems == err.problems

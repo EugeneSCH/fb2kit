@@ -71,20 +71,43 @@ def _check_depth(root: Any) -> None:
         stack.extend((child, depth + 1) for child in el)
 
 
+def _retag(tag: str, ns: str) -> str:
+    """The tag of an element in the FB2 namespace.
+
+    An element without a namespace gets the FB2 one; an element of the
+    foreign namespace gets it too. An element of another namespace is left
+    alone: it belongs to somebody else.
+
+    Args:
+        tag: The tag of the element.
+        ns: The namespace of the root, empty if the root has none.
+
+    Returns:
+        The new tag.
+    """
+    if ns == "" and not tag.startswith("{"):
+        return f"{{{FB2_NS}}}{tag}"
+    if ns and tag.startswith(f"{{{ns}}}"):
+        return f"{{{FB2_NS}}}{tag[len(ns) + 2 :]}"
+    return tag
+
+
 def _normalize(root: Any) -> list[Diagnostic]:
     ns, _, local = root.tag[1:].partition("}") if root.tag.startswith("{") else ("", "", root.tag)
     if local != "FictionBook":
         raise Fb2ParseError(f"root element is {local!r}, not FictionBook")
     if ns == FB2_NS:
         return []
-    for el in root.iter():
-        tag = el.tag
-        if not isinstance(tag, str):
-            continue
-        if ns == "" and not tag.startswith("{"):
-            el.tag = f"{{{FB2_NS}}}{tag}"
-        elif ns and tag.startswith(f"{{{ns}}}"):
-            el.tag = f"{{{FB2_NS}}}{tag[len(ns) + 2 :]}"
+    try:
+        for el in root.iter():
+            tag = el.tag
+            if not isinstance(tag, str):
+                continue
+            el.tag = _retag(tag, ns)
+    except ValueError as exc:
+        # lxml's recover mode lets an invalid element name through; the namespace
+        # prefixing then fails, and that is a parse error, not a programming error.
+        raise Fb2ParseError(f"invalid element name: {exc}") from exc
     if ns:
         return [
             Diagnostic(report.NS_FOREIGN, f"foreign namespace {ns!r} replaced", Severity.WARNING)

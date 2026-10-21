@@ -8,6 +8,7 @@ from fb2kit.errors import (
     Fb2ParseError,
     Fb2SourceError,
     Fb2UnsafeInputError,
+    Fb2WriteError,
 )
 from fb2kit.export import TextBlock, book_meta, iter_blocks
 from fb2kit.model import (
@@ -48,8 +49,24 @@ from fb2kit.model import (
     iter_nodes,
 )
 from fb2kit.report import Diagnostic, Mode, ParseReport, Severity
+from fb2kit.write import (
+    BookBuilder,
+    IdGenerator,
+    Problem,
+    SectionBuilder,
+    WriteReport,
+    WriteSeverity,
+    edit_metadata,
+    new_book,
+    reindex,
+    replace_node,
+    validate,
+    with_binaries,
+    with_cover,
+    with_description,
+)
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 __all__ = [
     "Annotation",
     "Author",
@@ -57,6 +74,7 @@ __all__ = [
     "Binary",
     "Block",
     "Body",
+    "BookBuilder",
     "Cell",
     "Cite",
     "CustomInfo",
@@ -71,7 +89,9 @@ __all__ = [
     "Fb2ParseError",
     "Fb2SourceError",
     "Fb2UnsafeInputError",
+    "Fb2WriteError",
     "FictionBook",
+    "IdGenerator",
     "Image",
     "Indexed",
     "Inline",
@@ -81,10 +101,12 @@ __all__ = [
     "Paragraph",
     "ParseReport",
     "Poem",
+    "Problem",
     "PublishInfo",
     "Raw",
     "Row",
     "Section",
+    "SectionBuilder",
     "Sequence",
     "Severity",
     "Stanza",
@@ -97,11 +119,21 @@ __all__ = [
     "Title",
     "TitleInfo",
     "Verse",
+    "WriteReport",
+    "WriteSeverity",
     "__version__",
     "book_meta",
     "decode_b64",
+    "edit_metadata",
     "iter_blocks",
     "iter_nodes",
+    "new_book",
     "parse",
     "parse_string",
+    "reindex",
+    "replace_node",
+    "validate",
+    "with_binaries",
+    "with_cover",
+    "with_description",
 ]

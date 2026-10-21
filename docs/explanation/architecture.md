@@ -42,7 +42,9 @@ modes they are diagnostics rather than exceptions.
 
 After parsing, a book is a value: it can be hashed, compared (`parse(path) == parse(bytes)`),
 cached and passed between threads without locks. The `tuple` and `frozen` dataclass types give
-`mypy --strict` a complete picture of the tree without `Any`. To change something, use `dataclasses.replace`.
+`mypy --strict` a complete picture of the tree without `Any`. To change something, use
+`dataclasses.replace` -- or, for a whole book, `fb2kit.edit_metadata` and the other helpers of
+[Writing a book](../how-to/write.md), which rebuild the `element` and the `index` of the copy.
 
 The escape hatch to XML (`FictionBook.element`, `Raw.element`) does not take part in comparison and stays
 a mutable ElementTree object: do not modify it if the book is cached somewhere.
